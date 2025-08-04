@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Recipe App</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    <header>
+        <nav aria-label="Main navigation">
+            <h1>Recipe App</h1>
+            <form id="recipeSearchForm" role="search" aria-label="Recipe search form">
+                <label for="searchInput" class="visually-hidden">Search for recipes</label>
+                <input 
+                    type="search" 
+                    id="searchInput" 
+                    placeholder="Search for recipes" 
+                    class="searchBox" 
+                    aria-label="Search for recipes"
+                />
+                <button type="submit" id="searchBtn" class="searchBtn">Search</button>
+            </form>
+        </nav>
+    </header>
+    <main>
+        <section class="search-section" aria-labelledby="resultsHeading">
+
+            <section class="search-history-section">
+                <h3>Recent Searches</h3>
+                <ul id="searchHistoryList" class="search-history-list"></ul>
+            </section>
+
+            <div class="recipe-container" id="recipeContainer">
+                <h2 id="resultsHeading">Search your favourite recipes</h2>
+            </div>
+
+            <div class="recipe-details-content" id="recipeDetailsContent"></div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+
+    <footer class="site-footer" role="contentinfo">
+            <div class="footer-content">
+                <p>&copy; <span id="year"></span> Recipe App. All rights reserved.</p>
+                <p>Developed by <a href="https://github.com/UGURAKSAHIN" target="_blank" rel="noopener">UĞUR AKŞAHİN</a></p>
+            </div>
+        </footer>
+</body>
+</html>
