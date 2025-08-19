@@ -2,7 +2,6 @@
 A simple and intuitive web application for those who want to search, explore, and save recipes. Users can search by the name of the dish, access detailed recipes, and quickly revisit their previous searches.
 
 # Preview
-<img width="2224" height="1096" alt="Recipe" src="https://github.com/user-attachments/assets/5e3ade02-b5da-4159-8ba1-2137b3acd3a7" />
 
 <img width="2240" height="1107" alt="Recipe-2" src="https://github.com/user-attachments/assets/acbaca28-d14f-453d-b999-3daa502fcbda" />
 
