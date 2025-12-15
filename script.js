@@ -27,7 +27,7 @@ function createRecipeElement(meal) {
         <h3>${meal.strMeal}</h3>
         <p><strong>Area:</strong> ${meal.strArea}</p>
         <p><strong>Category:</strong> ${meal.strCategory}</p>
-        <button class="view-recipe-btn" onclick="window.open('${link}', '_blank')">View Recipe</button>
+        <button class="view-recipe-btn">View Recipe</button>
     `;
 
     recipeDiv.querySelector('.view-recipe-btn').addEventListener('click',()=>{
@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
         yearSpan.textContent = new Date().getFullYear();
     }
 });
+
 
 
         
