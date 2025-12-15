@@ -62,21 +62,48 @@ const fetchRecipes = async (query) => {
 
 function saveToHistory(query) {
     let history = getSearchHistory();
-
     history = history.filter(item => item.toLowerCase() !== query.toLowerCase());
     history.unshift(query);
-
     localStorage.setItem('Search-History', JSON.stringify(history));
     renderSearchHistory();
+}
+function createHistoryListItem(item) {
+    const li = document.createElement('li');
+    li.textContent = item;
+    addHistoryItemListener(li, item);
+    return li;
+}
+function clearAndAppendChildren(container, children) {
+    container.innerHTML = '';
+    children.forEach(child => container.appendChild(child));
 }
 
 function renderSearchHistory() {
     const historyList = document.getElementById('searchHistoryList');
     const history = getSearchHistory();
+    const items=history.map(item =>createHistoryListItem(item));
+    clearAndAppendChildren(historyList, items); 
+}
+function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('Dark-Mode', isDark);
+    updateDarkModeButtonText(isDark);
+}
 
-     const items=history.map(item =>createHistoryListItem(item));
-     clearAndAppendChildren(historyList, items); 
- 
+function loadDarkModePreference() {
+    const isDark = JSON.parse(localStorage.getItem('Dark-Mode'));
+    if (isDark) {
+        document.body.classList.add('dark-mode');
+    }
+    updateDarkModeButtonText(isDark);
+}
+
+function updateDarkModeButtonText(isDark) {
+    const toggleBtn = document.getElementById('darkModeToggle');
+    if (toggleBtn) {
+        toggleBtn.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+    }
 }
 
 searchBtn.addEventListener('click', (e) => {
@@ -90,14 +117,22 @@ searchBtn.addEventListener('click', (e) => {
 
 document.addEventListener("DOMContentLoaded", () => {
     renderSearchHistory();
+    loadDarkModePreference();
 
     const yearSpan = document.getElementById("year");
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
     }
+
+    const darkModeToggleBtn = document.getElementById('darkModeToggle');
+    if (darkModeToggleBtn) {
+        darkModeToggleBtn.addEventListener('click', toggleDarkMode);
+    }
 });
 
 
 
+
         
+
 
