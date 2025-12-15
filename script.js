@@ -74,13 +74,9 @@ function renderSearchHistory() {
     const historyList = document.getElementById('searchHistoryList');
     const history = getSearchHistory();
 
-    historyList.innerHTML = '';
-    history.forEach(item => {
-        const li = document.createElement('li');
-        li.textContent = item;
-        addHistoryItemListener(li,item); 
-        historyList.appendChild(li);
-    });
+     const items=history.map(item =>createHistoryListItem(item));
+     clearAndAppendChildren(historyList, items); 
+ 
 }
 
 searchBtn.addEventListener('click', (e) => {
@@ -104,3 +100,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         
+
