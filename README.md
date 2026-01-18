@@ -3,7 +3,7 @@ A simple and intuitive web application for those who want to search, explore, an
 
 # Preview
 
-<img width="2240" height="1107" alt="Recipe-2" src="https://github.com/user-attachments/assets/acbaca28-d14f-453d-b999-3daa502fcbda" />
+<img width="2240" height="1107" alt="RecipeApp" src="https://github.com/user-attachments/assets/acbaca28-d14f-453d-b999-3daa502fcbda" />
 
 ## Features
 
