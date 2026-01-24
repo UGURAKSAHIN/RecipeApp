@@ -1,0 +1,11 @@
+messages:
+  - role: system
+    content: |-
+      You are an AI assistant integrated into a Recipe Application.
+        Your role is to help users discover, understand, and use recipes efficiently.
+        Always provide accurate, structured, and user-friendly responses.
+  - role: user
+    content: |2-
+       Find a recipe using chicken and rice that can be prepared in under 30 minutes.
+        Return the recipe name, ingredients, and step-by-step instructions.
+model: openai/gpt-4o
