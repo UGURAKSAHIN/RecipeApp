@@ -1,19 +1,17 @@
 const searchBox = document.querySelector('.searchBox');
-const searchBtn = document.querySelector('.searchBtn');
+const searchForm = document.querySelector('#recipeSearchForm');
 const recipeContainer = document.querySelector('.recipe-container');
-const footerContent = document.querySelector('.footer-content');
+const historyList = document.querySelector('#searchHistoryList');
 
 function displayMessage(message) {
     updateRecipeContainer(`<h2>${message}</h2>`);
 }
 
-function updateRecipeContainer(content = ''){
-
+function updateRecipeContainer(content = '') {
     recipeContainer.innerHTML = content;
 }
 
-function getSearchHistory(){
-
+function getSearchHistory() {
     return JSON.parse(localStorage.getItem('Search-History')) || [];
 }
 
@@ -21,18 +19,24 @@ function createRecipeElement(meal) {
     const recipeDiv = document.createElement('div');
     recipeDiv.classList.add('recipe');
     const link = meal.strSource || meal.strYoutube || '#';
+    const hasLink = link !== '#';
 
     recipeDiv.innerHTML = `
         <img src="${meal.strMealThumb}" alt="${meal.strMeal}" class="recipe-img">
         <h3>${meal.strMeal}</h3>
         <p><strong>Area:</strong> ${meal.strArea}</p>
         <p><strong>Category:</strong> ${meal.strCategory}</p>
-        <button class="view-recipe-btn">View Recipe</button>
+        <button class="view-recipe-btn" type="button" ${hasLink ? '' : 'disabled'}>
+            ${hasLink ? 'View Recipe' : 'Recipe Link Unavailable'}
+        </button>
     `;
 
-    recipeDiv.querySelector('.view-recipe-btn').addEventListener('click',()=>{
+    recipeDiv.querySelector('.view-recipe-btn').addEventListener('click', () => {
+        if (!hasLink) {
+            return;
+        }
 
-        window.open(link,'_blank');
+        window.open(link, '_blank', 'noopener');
     });
 
     return recipeDiv;
@@ -40,8 +44,9 @@ function createRecipeElement(meal) {
 
 const fetchRecipes = async (query) => {
     displayMessage('Fetching recipes...');
+
     try {
-        const data = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`);
+        const data = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${encodeURIComponent(query)}`);
         const response = await data.json();
 
         updateRecipeContainer();
@@ -62,53 +67,43 @@ const fetchRecipes = async (query) => {
 
 function saveToHistory(query) {
     let history = getSearchHistory();
+
     history = history.filter(item => item.toLowerCase() !== query.toLowerCase());
     history.unshift(query);
+    history = history.slice(0, 8);
+
     localStorage.setItem('Search-History', JSON.stringify(history));
     renderSearchHistory();
 }
-function createHistoryListItem(item) {
-    const li = document.createElement('li');
-    li.textContent = item;
-    addHistoryItemListener(li, item);
-    return li;
-}
-function clearAndAppendChildren(container, children) {
-    container.innerHTML = '';
-    children.forEach(child => container.appendChild(child));
+
+function addHistoryItemListener(historyItem, query) {
+    historyItem.addEventListener('click', () => {
+        searchBox.value = query;
+        fetchRecipes(query);
+        saveToHistory(query);
+    });
 }
 
 function renderSearchHistory() {
-    const historyList = document.getElementById('searchHistoryList');
     const history = getSearchHistory();
-    const items=history.map(item =>createHistoryListItem(item));
-    clearAndAppendChildren(historyList, items); 
-}
-function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
-    const isDark = document.body.classList.contains('dark-mode');
-    localStorage.setItem('Dark-Mode', isDark);
-    updateDarkModeButtonText(isDark);
+
+    historyList.innerHTML = '';
+    history.forEach(item => {
+        const li = document.createElement('li');
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'search-history-chip';
+        button.textContent = item;
+        addHistoryItemListener(button, item);
+        li.appendChild(button);
+        historyList.appendChild(li);
+    });
 }
 
-function loadDarkModePreference() {
-    const isDark = JSON.parse(localStorage.getItem('Dark-Mode'));
-    if (isDark) {
-        document.body.classList.add('dark-mode');
-    }
-    updateDarkModeButtonText(isDark);
-}
-
-function updateDarkModeButtonText(isDark) {
-    const toggleBtn = document.getElementById('darkModeToggle');
-    if (toggleBtn) {
-        toggleBtn.textContent = isDark ? 'Light Mode' : 'Dark Mode';
-    }
-}
-
-searchBtn.addEventListener('click', (e) => {
+searchForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const searchInput = searchBox.value.trim();
+
     if (searchInput) {
         fetchRecipes(searchInput);
         saveToHistory(searchInput);
@@ -117,22 +112,9 @@ searchBtn.addEventListener('click', (e) => {
 
 document.addEventListener("DOMContentLoaded", () => {
     renderSearchHistory();
-    loadDarkModePreference();
 
     const yearSpan = document.getElementById("year");
     if (yearSpan) {
         yearSpan.textContent = new Date().getFullYear();
     }
-
-    const darkModeToggleBtn = document.getElementById('darkModeToggle');
-    if (darkModeToggleBtn) {
-        darkModeToggleBtn.addEventListener('click', toggleDarkMode);
-    }
 });
-
-
-
-
-        
-
-
