@@ -4,6 +4,7 @@ A simple and intuitive web application for those who want to search, explore, an
 # Preview
 
 <img width="2157" height="1181" alt="Screenshot (19)" src="https://github.com/user-attachments/assets/fb5b4df4-a1d4-4747-89d4-7fa7754c41ef" />
+<img width="2240" height="1182" alt="Screenshot (20)" src="https://github.com/user-attachments/assets/5c8c5c6a-d505-4cc8-9ccd-0c2a11aee6a0" />
 
 
 ## Features
