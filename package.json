@@ -1,0 +1,15 @@
+{
+  "name": "recipe-app-js",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A simple recipe search app built with HTML, CSS, and JavaScript.",
+  "scripts": {
+    "dev": "vite",
+    "start": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^7.1.9"
+  }
+}
