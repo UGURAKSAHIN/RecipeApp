@@ -1,43 +1,43 @@
-# RecipeApp
-A simple and intuitive web application for those who want to search, explore, and save recipes. Users can search by the name of the dish, access detailed recipes, and quickly revisit their previous searches.
+# Recipe App
 
-# Preview
-<img width="2220" height="1191" alt="Screenshot (21)" src="https://github.com/user-attachments/assets/7d5a6078-1826-489a-874e-630c62090134" />
-<img width="2213" height="1198" alt="Screenshot (22)" src="https://github.com/user-attachments/assets/4951a349-e7fc-4007-a401-ad07803e6049" />
-<img width="2202" height="1201" alt="Screenshot (23)" src="https://github.com/user-attachments/assets/495e98b0-ea4e-4b21-b06b-de23c8936154" />
-<img width="2228" height="1212" alt="Screenshot (24)" src="https://github.com/user-attachments/assets/8f382fce-eded-45dd-aca5-e16bcd7aa5aa" />
+A simple and intuitive web application for searching, exploring, and revisiting recipes. Users can search by meal name, browse matching results in real time, open full recipe details, and quickly rerun previous searches from local history.
 
 ## Features
 
-- Real-time recipe search (via TheMealDB API)
-- Search history record and quick access
-- Mobile-friendly design (responsive design)
-- Direct links to recipes with YouTube and source links
-- Accessibility-friendly HTML & CSS structure
-- Easy to use and lightweight interface
+- Real-time recipe search powered by TheMealDB API
+- Recent search history saved in `localStorage`
+- Responsive layout for desktop and mobile screens
+- Detailed recipe view with ingredients and instructions
+- Direct links to YouTube videos and original recipe sources
+- Accessible semantic HTML with live status updates
 
-# Technology Stack
+## Technology Stack
 
-- **HTML5** – Semantic structure and accessibility
-- **CSS3** – Style design with variables, Grid & Flexbox
-- **JavaScript (ES6+)**
-– Asynchronous data fetching and DOM manipulations
-- **[TheMealDB API](https://www.themealdb.com/)**
-- Open source food data
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+- [TheMealDB API](https://www.themealdb.com/)
 
-# Project Structure
+## Project Structure
 
+```text
 recipe-app/
-├── src/
-│   └── index.js
-├── package.json
-├── README.md
-└── .gitignore
+├── index.html
+├── script.js
+├── style.css
+└── README.md
+```
 
-# Licence
+## Getting Started
 
-This project is licensed under the MIT License. Please refer to the LICENSE file for details.
+1. Clone or download the project.
+2. Open `index.html` in your browser.
+3. Start typing a meal name to search.
 
-# Contribution
+## License
 
-Contributions are always welcome! Please specify what you would like to change by opening an issue first.
+This project is licensed under the MIT License.
+
+## Contribution
+
+Contributions are welcome. Please open an issue first to discuss major changes.
