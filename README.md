@@ -2,10 +2,10 @@
 A simple and intuitive web application for those who want to search, explore, and save recipes. Users can search by the name of the dish, access detailed recipes, and quickly revisit their previous searches.
 
 # Preview
-
-<img width="2157" height="1181" alt="Screenshot (19)" src="https://github.com/user-attachments/assets/fb5b4df4-a1d4-4747-89d4-7fa7754c41ef" />
-<img width="2240" height="1182" alt="Screenshot (20)" src="https://github.com/user-attachments/assets/5c8c5c6a-d505-4cc8-9ccd-0c2a11aee6a0" />
-
+<img width="2220" height="1191" alt="Screenshot (21)" src="https://github.com/user-attachments/assets/7d5a6078-1826-489a-874e-630c62090134" />
+<img width="2213" height="1198" alt="Screenshot (22)" src="https://github.com/user-attachments/assets/4951a349-e7fc-4007-a401-ad07803e6049" />
+<img width="2202" height="1201" alt="Screenshot (23)" src="https://github.com/user-attachments/assets/495e98b0-ea4e-4b21-b06b-de23c8936154" />
+<img width="2228" height="1212" alt="Screenshot (24)" src="https://github.com/user-attachments/assets/8f382fce-eded-45dd-aca5-e16bcd7aa5aa" />
 
 ## Features
 
@@ -28,10 +28,11 @@ A simple and intuitive web application for those who want to search, explore, an
 # Project Structure
 
 recipe-app/
-├── index.html
-├── style.css
-├── script.js
-└── README.md
+├── src/
+│   └── index.js
+├── package.json
+├── README.md
+└── .gitignore
 
 # Licence
 
