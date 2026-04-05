@@ -1,0 +1,37 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "msedge",
+            "request": "launch",
+            "name": "Debug Recipe App (Edge, file)",
+            "file": "${workspaceFolder}/index.html",
+            "webRoot": "${workspaceFolder}",
+            "runtimeExecutable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Debug Recipe App (Chrome, file)",
+            "file": "${workspaceFolder}/index.html",
+            "webRoot": "${workspaceFolder}",
+            "runtimeExecutable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+        },
+        {
+            "type": "msedge",
+            "request": "launch",
+            "name": "Debug Recipe App (Edge, Vite)",
+            "url": "http://127.0.0.1:4173",
+            "webRoot": "${workspaceFolder}",
+            "runtimeExecutable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Debug Recipe App (Chrome, Vite)",
+            "url": "http://127.0.0.1:4173",
+            "webRoot": "${workspaceFolder}",
+            "runtimeExecutable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+        }
+    ]
+}

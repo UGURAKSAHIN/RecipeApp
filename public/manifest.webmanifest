@@ -1,0 +1,18 @@
+{
+  "name": "Recipe App",
+  "short_name": "Recipes",
+  "description": "Search, save, and share recipes with a lightweight installable web app.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5efe4",
+  "theme_color": "#1f3a2f",
+  "icons": [
+    {
+      "src": "./favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

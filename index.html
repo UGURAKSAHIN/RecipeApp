@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+        name="description"
+        content="Search recipes in real time, save your favorite meals, reopen them later, and share direct recipe links from a polished cooking workspace."
+    />
+    <meta name="theme-color" content="#1f3a2f" />
+    <meta name="application-name" content="Recipe App" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta property="og:title" content="Recipe App | Save, Search, and Share Meals" />
+    <meta
+        property="og:description"
+        content="Search meals in real time, keep a personal cookbook, and share direct recipe links with a lightweight web app."
+    />
+    <meta property="og:type" content="website" />
+    <title>Recipe App | Save, Search, and Share Meals</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <header>
+        <nav aria-label="Main navigation">
+            <div class="brand-copy">
+                <p class="eyebrow">TheMealDB powered</p>
+                <h1>Recipe App</h1>
+                <p class="hero-copy">Search a dish, save your go-to meals, and share a clean recipe link in one polished workspace.</p>
+
+                <div class="hero-actions">
+                    <button type="button" id="installAppBtn" class="secondary-action" hidden>Install app</button>
+                    <p class="hero-note">Designed for quick discovery, lightweight saving, and easy return visits on desktop or mobile.</p>
+                </div>
+            </div>
+
+            <div class="search-shell">
+                <form id="recipeSearchForm" role="search" aria-label="Recipe search form">
+                    <label for="searchInput" class="visually-hidden">Search for recipes</label>
+                    <input
+                        type="search"
+                        id="searchInput"
+                        placeholder="Search by meal name, like pasta or curry"
+                        class="searchBox"
+                        aria-label="Search for recipes"
+                        autocomplete="off"
+                    />
+                    <button type="submit" id="searchBtn" class="searchBtn">Search</button>
+                </form>
+
+                <p class="search-helper">Live search updates the result grid as you type, and saved recipes stay with you on the same device.</p>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="search-section" aria-labelledby="resultsHeading">
+            <noscript>
+                <div class="noscript-card">
+                    JavaScript is required to search, save, and share recipes in this app.
+                </div>
+            </noscript>
+
+            <section class="intro-card" aria-labelledby="introHeading">
+                <div>
+                    <p class="section-label">Quick guide</p>
+                    <h2 id="introHeading">Turn recipe search into your own mini cookbook</h2>
+                    <p>Search in real time, open a recipe card for full details, save the meals you want to revisit, and share a clean link to the current recipe state.</p>
+                </div>
+
+                <div class="intro-stats" aria-label="Recipe app highlights">
+                    <article>
+                        <strong>Live</strong>
+                        <span>Instant result updates while typing</span>
+                    </article>
+                    <article>
+                        <strong>Saved</strong>
+                        <span>Favorites stored locally in your browser</span>
+                    </article>
+                    <article>
+                        <strong>Shared</strong>
+                        <span>Recipe links that can be reopened directly</span>
+                    </article>
+                </div>
+            </section>
+
+            <section class="saved-section" aria-labelledby="savedHeading">
+                <div class="section-heading">
+                    <div>
+                        <p class="section-label">Your cookbook</p>
+                        <h2 id="savedHeading">Saved recipes</h2>
+                    </div>
+                    <span id="favoritesCountBadge" class="count-badge">0 saved</span>
+                </div>
+
+                <div id="favoritesList" class="favorites-grid"></div>
+            </section>
+
+            <section class="search-history-section" aria-labelledby="historyHeading">
+                <h3 id="historyHeading">Recent searches</h3>
+                <ul id="searchHistoryList" class="search-history-list"></ul>
+            </section>
+
+            <div id="searchStatus" class="search-status" role="status" aria-live="polite">
+                Try a meal like "Arrabiata", "Chicken", or "Soup".
+            </div>
+
+            <div class="recipe-container" id="recipeContainer">
+                <h2 id="resultsHeading">Search your favourite recipes</h2>
+            </div>
+
+            <section class="recipe-details-content" id="recipeDetailsContent" aria-live="polite"></section>
+        </section>
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-content">
+            <p>&copy; <span id="year"></span> Recipe App. All rights reserved.</p>
+            <p>Built for quick recipe discovery, saving, and sharing.</p>
+            <p>Developed by <a href="https://github.com/UGURAKSAHIN" target="_blank" rel="noopener">UGUR AKSAHIN</a></p>
+        </div>
+    </footer>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
