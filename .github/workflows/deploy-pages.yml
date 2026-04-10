@@ -20,13 +20,12 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4 # v4 en güncel kararlı sürüm
 
       - name: Set up Node
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v4 # v4 en güncel kararlı sürüm
         with:
           node-version: lts/*
           cache: "npm"
@@ -45,15 +44,15 @@ jobs:
 
       - name: Build
         run: npm run build
-
-      - name: Disable Jekyll processing
-        run: touch dist/.nojekyll
+        env:
+          # Build sırasında Vite'ın bu değişkeni görmesini sağlıyoruz
+          BASE_URL: ${{ env.VITE_BASE_PATH }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
           path: "./dist"
 
