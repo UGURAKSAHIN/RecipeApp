@@ -1,6 +1,4 @@
 (() => {
-    "use strict";
-
     const baseUrl = import.meta.env?.BASE_URL || "/";
     const SEARCH_API_ENDPOINT = "https://www.themealdb.com/api/json/v1/1/search.php?s=";
     const LOOKUP_API_ENDPOINT = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
@@ -9,6 +7,13 @@
     const MAX_HISTORY_ITEMS = 8;
     const MAX_FAVORITES_ITEMS = 12;
     const LIVE_SEARCH_DELAY = 350;
+    const HTML_ENTITIES = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;"
+    };
 
     const form = document.querySelector("#recipeSearchForm");
     const searchInput = document.querySelector("#searchInput");
@@ -38,6 +43,7 @@
         return;
     }
 
+    const savedFavorites = readFavorites().slice(0, MAX_FAVORITES_ITEMS);
     const state = {
         meals: [],
         currentQuery: "",
@@ -45,23 +51,14 @@
         activeController: null,
         debounceId: null,
         installPromptEvent: null,
-        favorites: readFavorites()
+        favorites: savedFavorites,
+        favoriteIds: new Set(savedFavorites.map((meal) => meal.idMeal))
     };
 
     yearElement.textContent = new Date().getFullYear();
 
     function escapeHtml(value) {
-        return String(value).replace(/[&<>"']/g, (character) => {
-            const entities = {
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                "\"": "&quot;",
-                "'": "&#39;"
-            };
-
-            return entities[character] || character;
-        });
+        return String(value).replace(/[&<>"']/g, (character) => HTML_ENTITIES[character] || character);
     }
 
     function normalizeQuery(value) {
@@ -126,8 +123,7 @@
 
     function saveFavorites() {
         try {
-            localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(state.favorites.slice(0, MAX_FAVORITES_ITEMS)));
-            renderFavorites();
+            localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(state.favorites));
             return true;
         } catch (error) {
             setStatus("Recipe updated, but your browser blocked saving favorites.", "error");
@@ -150,8 +146,19 @@
         return [meal.strArea, meal.strCategory].filter(Boolean);
     }
 
+    function renderTags(meal, className) {
+        return getMealTags(meal)
+            .map((tag) => `<span class="${className}">${escapeHtml(tag)}</span>`)
+            .join("");
+    }
+
+    function setFavorites(favorites) {
+        state.favorites = favorites.slice(0, MAX_FAVORITES_ITEMS);
+        state.favoriteIds = new Set(state.favorites.map((meal) => meal.idMeal));
+    }
+
     function isFavorite(mealId) {
-        return state.favorites.some((meal) => meal.idMeal === String(mealId));
+        return state.favoriteIds.has(String(mealId));
     }
 
     function setStatus(message, stateName = "idle") {
@@ -220,8 +227,7 @@
     }
 
     function renderFavorites() {
-        const countLabel = `${state.favorites.length} saved`;
-        favoritesCountBadge.textContent = countLabel;
+        favoritesCountBadge.textContent = `${state.favorites.length} saved`;
 
         if (!state.favorites.length) {
             favoritesList.innerHTML = `
@@ -243,7 +249,7 @@
                 />
                 <div class="favorite-card-body">
                     <div class="recipe-tags">
-                        ${getMealTags(meal).map((tag) => `<span class="recipe-tag">${escapeHtml(tag)}</span>`).join("")}
+                        ${renderTags(meal, "recipe-tag")}
                     </div>
                     <h3>${escapeHtml(meal.strMeal)}</h3>
                     <p>${escapeHtml(truncateText(meal.strInstructions || "Saved recipes can be reopened in a single click."))}</p>
@@ -290,7 +296,7 @@
                         />
                         <div class="recipe-body">
                             <div class="recipe-tags">
-                                ${getMealTags(meal).map((tag) => `<span class="recipe-tag">${escapeHtml(tag)}</span>`).join("")}
+                                ${renderTags(meal, "recipe-tag")}
                             </div>
                             <h3>${escapeHtml(meal.strMeal)}</h3>
                             <p>${escapeHtml(truncateText(meal.strInstructions || "Recipe details available."))}</p>
@@ -351,7 +357,7 @@
                     <div class="details-title">
                         <h3>${escapeHtml(meal.strMeal)}</h3>
                         <div class="details-badges">
-                            ${getMealTags(meal).map((tag) => `<span class="details-badge">${escapeHtml(tag)}</span>`).join("")}
+                            ${renderTags(meal, "details-badge")}
                             ${saved ? `<span class="details-badge">Saved</span>` : ""}
                         </div>
                     </div>
@@ -414,12 +420,12 @@
         const mealIsSaved = isFavorite(mealId);
 
         if (mealIsSaved) {
-            state.favorites = state.favorites.filter((item) => item.idMeal !== mealId);
+            setFavorites(state.favorites.filter((item) => item.idMeal !== mealId));
         } else {
-            state.favorites = [
+            setFavorites([
                 createMealSummary(meal),
                 ...state.favorites.filter((item) => item.idMeal !== mealId)
-            ].slice(0, MAX_FAVORITES_ITEMS);
+            ]);
         }
 
         if (!saveFavorites()) {
@@ -522,6 +528,7 @@
 
             if (state.activeController) {
                 state.activeController.abort();
+                state.activeController = null;
             }
 
             searchButton.disabled = false;
@@ -579,6 +586,7 @@
                 return;
             }
 
+            state.meals = [];
             recipeContainer.innerHTML = `
                 <div class="empty-state">
                     <h2 id="resultsHeading">We could not load recipes right now</h2>
@@ -590,9 +598,8 @@
         } finally {
             if (state.activeController === controller) {
                 state.activeController = null;
+                searchButton.disabled = false;
             }
-
-            searchButton.disabled = false;
         }
     }
 
@@ -714,14 +721,21 @@
     });
 
     installAppButton.addEventListener("click", async () => {
-        if (!state.installPromptEvent) {
+        const promptEvent = state.installPromptEvent;
+        if (!promptEvent) {
             return;
         }
 
-        state.installPromptEvent.prompt();
-        await state.installPromptEvent.userChoice;
-        state.installPromptEvent = null;
-        installAppButton.hidden = true;
+        promptEvent.prompt();
+
+        try {
+            await promptEvent.userChoice;
+        } finally {
+            if (state.installPromptEvent === promptEvent) {
+                state.installPromptEvent = null;
+                installAppButton.hidden = true;
+            }
+        }
     });
 
     renderHistory();

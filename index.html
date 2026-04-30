@@ -11,15 +11,20 @@
     <meta name="application-name" content="Recipe App" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="format-detection" content="telephone=no" />
     <meta property="og:title" content="Recipe App | Save, Search, and Share Meals" />
     <meta
         property="og:description"
         content="Search meals in real time, keep a personal cookbook, and share direct recipe links with a lightweight web app."
     />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Recipe App" />
+    <meta name="twitter:card" content="summary" />
     <title>Recipe App | Save, Search, and Share Meals</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="preconnect" href="https://www.themealdb.com" />
+    <link rel="dns-prefetch" href="https://www.themealdb.com" />
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
+    <link rel="manifest" href="%BASE_URL%manifest.webmanifest" />
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -45,12 +50,18 @@
                         placeholder="Search by meal name, like pasta or curry"
                         class="searchBox"
                         aria-label="Search for recipes"
+                        aria-describedby="searchHelper searchStatus"
                         autocomplete="off"
+                        autocapitalize="none"
+                        enterkeyhint="search"
+                        inputmode="search"
+                        maxlength="80"
+                        spellcheck="false"
                     />
                     <button type="submit" id="searchBtn" class="searchBtn">Search</button>
                 </form>
 
-                <p class="search-helper">Live search updates the result grid as you type, and saved recipes stay with you on the same device.</p>
+                <p id="searchHelper" class="search-helper">Live search updates the result grid as you type, and saved recipes stay with you on the same device.</p>
             </div>
         </nav>
     </header>
